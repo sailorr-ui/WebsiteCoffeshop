@@ -12,7 +12,7 @@ h1 {
 
 .produk-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding: 20px;
   max-width: 1200px;
@@ -70,3 +70,23 @@ h1 {
 #checkout-button:hover {
   background-color: #555;
 }
+@media (max-width: 768px) {
+  .produk-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .produk-container {
+    grid-template-columns: 1fr;
+  }
+.produk {
+  margin-bottom: 10px;
+}
+@media (max-width: 480px) {
+  .produk img {
+    height: 150px;
+  }
+}
+
+
