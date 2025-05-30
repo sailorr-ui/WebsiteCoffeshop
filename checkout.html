@@ -9,7 +9,8 @@
     body { font-family: Arial, sans-serif; padding: 20px; }
     .pesanan-item { margin-bottom: 10px; }
     #total { font-weight: bold; margin-top: 20px; }
-    #qr-container { margin-top: 20px; display: none; }
+    #qr-container { margin-top: 20px; display: none; text-align: center; }
+    #qr-container img { border: 1px solid #ccc; border-radius: 8px; }
   </style>
 </head>
 <body>
@@ -23,35 +24,28 @@
 
   <div id="qr-container">
     <h3>Silakan Scan QR untuk Membayar</h3>
-    <img id="qr-image" src="" alt="QR Code" width="200">
+    <img id="qr-image" src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/CoffeShop_qrcode.png" alt="QR Code Pembayaran" width="200">
   </div>
 
   <script>
-    // Ambil data dari localStorage
     const pesanan = JSON.parse(localStorage.getItem('pesanan')) || [];
     const daftarPesanan = document.getElementById('daftar-pesanan');
     const totalElem = document.getElementById('total');
     const qrContainer = document.getElementById('qr-container');
-    const qrImage = document.getElementById('qr-image');
 
     let total = 0;
 
     pesanan.forEach(item => {
       const itemElem = document.createElement('div');
       itemElem.className = 'pesanan-item';
-      itemElem.textContent = `${item.nama} x ${item.jumlah} = Rp${item.harga * item.jumlah}`;
+      itemElem.textContent = `${item.nama} x ${item.jumlah} = Rp${(item.harga * item.jumlah).toLocaleString('id-ID')}`;
       daftarPesanan.appendChild(itemElem);
-
       total += item.harga * item.jumlah;
     });
 
     totalElem.textContent = `Total: Rp${total.toLocaleString('id-ID')}`;
 
-    // Fungsi saat tombol bayar diklik
     document.getElementById('bayar-btn').addEventListener('click', () => {
-      // Buat QR pakai API dari goqr.me
-      const urlQR = `https://api.qrserver.com/v1/create-qr-code/?data=Total+Rp${total}&size=200x200`;
-      qrImage.src = urlQR;
       qrContainer.style.display = 'block';
     });
   </script>
