@@ -10,65 +10,75 @@
 
   <h1>Daftar Menu</h1>
 
-<div class="produk-container">
+  <div class="produk-container">
 
-  <a href="produk-a.html" class="produk-link">
+    <!-- Contoh Produk -->
     <div class="produk">
       <img src="https://raw.githubusercontent.com/sailorr-ui/produkku/refs/heads/main/Americano.jpg" alt="Americano" />
       <h2>Americano</h2>
       <p class="harga">Rp15.000</p>
-      
+      <div class="counter">
+        <button class="minus">-</button>
+        <span class="jumlah">0</span>
+        <button class="plus">+</button>
+      </div>
     </div>
-  </a>
 
-
-  <a href="produk-b.html" class="produk-link">
+    <!-- Tambahkan produk lain di sini (copy blok di atas) -->
+    <!-- Matcha -->
     <div class="produk">
       <img src="https://raw.githubusercontent.com/sailorr-ui/produkku/refs/heads/main/Matcha.jpg" alt="Matcha" />
       <h2>Matcha</h2>
       <p class="harga">Rp15.000</p>
-      
+      <div class="counter">
+        <button class="minus">-</button>
+        <span class="jumlah">0</span>
+        <button class="plus">+</button>
+      </div>
     </div>
-  </a>
 
-  <a href="produk-c.html" class="produk-link">
+    <!-- Red Velvet -->
     <div class="produk">
       <img src="https://raw.githubusercontent.com/sailorr-ui/produkku/refs/heads/main/red%20velvet.jpg" alt="Red Velvet" />
       <h2>Red Velvet</h2>
       <p class="harga">Rp15.000</p>
-      
+      <div class="counter">
+        <button class="minus">-</button>
+        <span class="jumlah">0</span>
+        <button class="plus">+</button>
+      </div>
     </div>
-  </a>
 
-  <a href="produk-d.html" class="produk-link">
-    <div class="produk">
-      <img src="https://raw.githubusercontent.com/sailorr-ui/produkku/refs/heads/main/Cappucino.jpg" alt="Cappucino" />
-      <h2>Cappucino</h2>
-      <p class="harga">Rp15.000</p>
-      
-    </div>
-  </a>
+    <!-- Tambahkan semua produk lain sesuai template di atas -->
 
-  <a href="produk-e.html" class="produk-link">
-    <div class="produk">
-      <img src="https://raw.githubusercontent.com/sailorr-ui/produkku/refs/heads/main/espreso.jpg" alt="Espreso" />
-      <h2>Espreso</h2>
-      <p class="harga">Rp15.000</p>
-      
-    </div>
-  </a>
+  </div>
 
-  <a href="produk-f.html" class="produk-link">
-    <div class="produk">
-      <img src="https://raw.githubusercontent.com/sailorr-ui/produkku/refs/heads/main/karamel%20latte.jpg" alt="Karamel Latte" />
-      <h2>Karamel Latte</h2>
-      <p class="harga">Rp15.000</p>
-      
-    </div>
-  </a>
+  <div class="checkout-container">
+    <button id="checkout-button">Checkout</button>
+  </div>
 
-</div>
+  <script>
+    // Fungsi tombol + dan -
+    document.querySelectorAll('.produk').forEach(produk => {
+      const plus = produk.querySelector('.plus');
+      const minus = produk.querySelector('.minus');
+      const jumlah = produk.querySelector('.jumlah');
 
+      plus.addEventListener('click', () => {
+        jumlah.textContent = parseInt(jumlah.textContent) + 1;
+      });
+
+      minus.addEventListener('click', () => {
+        if (parseInt(jumlah.textContent) > 0) {
+          jumlah.textContent = parseInt(jumlah.textContent) - 1;
+        }
+      });
+    });
+
+    document.getElementById('checkout-button').addEventListener('click', () => {
+      alert('Fitur checkout belum aktif!');
+    });
+  </script>
 
 </body>
 </html>
