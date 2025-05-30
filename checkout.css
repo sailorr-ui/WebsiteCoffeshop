@@ -1,0 +1,76 @@
+/* Gaya umum */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #444;
+  margin-bottom: 30px;
+}
+
+/* Daftar pesanan */
+#pesanan-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+}
+
+.pesanan-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 16px;
+}
+
+.pesanan-item:last-child {
+  border-bottom: none;
+}
+
+/* Total */
+#total {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: right;
+  margin-top: 20px;
+  color: #222;
+}
+
+/* Tombol bayar */
+#bayar-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 25px;
+  transition: background-color 0.3s ease;
+}
+
+#bayar-button:hover {
+  background-color: #1b5e20;
+}
+
+/* QR Code */
+#qr-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
+#qr-container img {
+  width: 200px;
+  height: auto;
+  margin-top: 15px;
+}
