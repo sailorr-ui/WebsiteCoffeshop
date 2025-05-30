@@ -12,9 +12,9 @@
 
   <div class="produk-container">
 
-    <!-- Contoh Produk -->
+    <!-- Americano -->
     <div class="produk">
-      <img src="https://raw.githubusercontent.com/sailorr-ui/produkku/refs/heads/main/Americano.jpg" alt="Americano" />
+      <img src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/Americano.jpg" alt="Americano" />
       <h2>Americano</h2>
       <p class="harga">Rp15.000</p>
       <div class="counter">
@@ -25,10 +25,10 @@
     </div>
 
     <!-- Tambahkan produk lain di sini (copy blok di atas) -->
-    <!-- Matcha -->
-    <div class="produk">
-      <img src="https://raw.githubusercontent.com/sailorr-ui/produkku/refs/heads/main/Matcha.jpg" alt="Matcha" />
-      <h2>Matcha</h2>
+    <!-- Cappucino -->
+  <div class="produk">
+      <img src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/Cappucino.jpg" alt="Cappucino" />
+      <h2>Cappucino</h2>
       <p class="harga">Rp15.000</p>
       <div class="counter">
         <button class="minus">-</button>
@@ -37,9 +37,45 @@
       </div>
     </div>
 
-    <!-- Red Velvet -->
-    <div class="produk">
-      <img src="https://raw.githubusercontent.com/sailorr-ui/produkku/refs/heads/main/red%20velvet.jpg" alt="Red Velvet" />
+    <!-- Matcha -->
+     <div class="produk">
+      <img src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/Matcha.jpg" alt="Matcha" />
+      <h2>Matcha</h2>
+      <p class="harga">Rp15.000</p>
+      <div class="counter">
+        <button class="minus">-</button>
+        <span class="jumlah">0</span>
+        <button class="plus">+</button>
+      </div>
+    </div>
+    
+     <!-- Espreso -->
+     <div class="produk">
+      <img src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/espreso.jpg" alt="Espreso" />
+      <h2>Espreso</h2>
+      <p class="harga">Rp15.000</p>
+      <div class="counter">
+        <button class="minus">-</button>
+        <span class="jumlah">0</span>
+        <button class="plus">+</button>
+      </div>
+    </div>
+
+     <!-- Karamel -->
+     <div class="produk">
+      <img src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/karamel%20latte.jpg" alt="Karamel" />
+      <h2>Karamel</h2>
+      <p class="harga">Rp15.000</p>
+      <div class="counter">
+        <button class="minus">-</button>
+        <span class="jumlah">0</span>
+        <button class="plus">+</button>
+      </div>
+    </div>
+
+     <!-- Red Velvet -->
+     <div class="produk">
+      <img src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/red%20velvet.jpg" alt="Red Velvet" />
       <h2>Red Velvet</h2>
       <p class="harga">Rp15.000</p>
       <div class="counter">
@@ -76,8 +112,27 @@
     });
 
     document.getElementById('checkout-button').addEventListener('click', () => {
-      alert('Fitur checkout belum aktif!');
-    });
+  const pesanan = [];
+
+  document.querySelectorAll('.produk').forEach(produk => {
+    const nama = produk.querySelector('h2').textContent;
+    const harga = parseInt(produk.querySelector('.harga').textContent.replace(/\D/g, ''));
+    const jumlah = parseInt(produk.querySelector('.jumlah').textContent);
+
+    if (jumlah > 0) {
+      pesanan.push({ nama, harga, jumlah });
+    }
+  });
+
+  if (pesanan.length === 0) {
+    alert('Pilih minimal satu produk sebelum checkout.');
+    return;
+  }
+
+  localStorage.setItem('pesanan', JSON.stringify(pesanan));
+  window.location.href = 'checkout.html'; // arahkan ke halaman checkout
+});
+
   </script>
 
 </body>
