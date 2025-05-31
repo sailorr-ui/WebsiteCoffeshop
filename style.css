@@ -31,7 +31,7 @@ h1 {
   justify-content: center;
   gap: 30px;       /* Jarak antar produk secara horizontal dan vertikal */
   padding: 0 30px; /* Sedikit padding samping */
-  max-width: 740px;
+  max-width: 900px;
   margin: 0 auto;  /* Buat kontainer selalu di tengah */
 }
 
