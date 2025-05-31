@@ -1,96 +1,168 @@
-body {
-  font-family: Arial, sans-serif;
+/*--------------------------------------
+  RESET DASAR
+--------------------------------------*/
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background: #f2f2f2;
+}
+
+/*--------------------------------------
+  BODY & JUDUL
+--------------------------------------*/
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  padding: 20px;
 }
 
 h1 {
   text-align: center;
-  padding: 20px;
+  color: #222;
+  margin-bottom: 20px;
 }
 
+/*--------------------------------------
+  KONTAINER PRODUK (3 PER BARIS)
+--------------------------------------*/
 .produk-container {
- display: flex;
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px; /* jarak antar produk */
-  padding: 20px;
+  gap: 20px;       /* Jarak antar produk secara horizontal dan vertikal */
+  padding: 0 20px; /* Sedikit padding samping */
+  max-width: 1200px;
+  margin: 0 auto;  /* Buat kontainer selalu di tengah */
 }
 
+/*--------------------------------------
+  KOTAK PRODUK (UNIFORM SIZE)
+--------------------------------------*/
 .produk {
-  width: 220px;
-  height: 360px; /* pastikan semua tingginya sama */
-  background-color: #f8f8f8;
-  border-radius: 15px;
-  padding: 15px;
+  width: 220px;               /* Lebar tetap setiap kotak */
+  height: 360px;              /* Tinggi tetap setiap kotak */
+  background-color: #ffffff;  /* Latar putih */
+  border-radius: 12px;        /* Sudut membulat */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
+  padding: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; /* Susun isi atas ke bawah dengan spasi rata */
   align-items: center;
+  overflow: hidden;
 }
 
+/*--------------------------------------
+  GAMBAR PRODUK (PROPORSIONAL)
+--------------------------------------*/
 .produk img {
   width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.harga {
-  color: #444;
+  height: 160px;       /* Tinggi gambar disetel */
+  object-fit: cover;   /* Pastikan gambar memenuhi area, tidak ada latar abu */
+  border-radius: 8px;
   margin-bottom: 10px;
 }
 
+/*--------------------------------------
+  NAMA PRODUK
+--------------------------------------*/
+.produk h2 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+/*--------------------------------------
+  HARGA PRODUK
+--------------------------------------*/
+.produk .harga {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+/*--------------------------------------
+  CONTROLLER (+ / –)
+--------------------------------------*/
 .counter {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 10px;
 }
 
 .counter button {
-  padding: 5px 10px;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.counter button:hover {
+  background-color: #d0d0d0;
+}
+
+.counter .jumlah {
+  min-width: 20px;
+  text-align: center;
   font-size: 16px;
 }
 
+/*--------------------------------------
+  TOMBOL CHECKOUT
+--------------------------------------*/
 .checkout-container {
   text-align: center;
   margin: 30px 0;
 }
 
 #checkout-button {
-  padding: 12px 25px;
+  padding: 12px 30px;
   font-size: 16px;
   background-color: #333;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 #checkout-button:hover {
   background-color: #555;
 }
+
+/*--------------------------------------
+  RESPONSIVE: TABLET & MOBILE
+--------------------------------------*/
+/* Tablet (≤768px): 2 kolom */
 @media (max-width: 768px) {
   .produk-container {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  .produk {
+    width: 45%;    /* kira-kira 2 per baris */
+    height: 340px; /* sedikit kurang tinggi untuk layout lebih nyaman */
+  }
+  .produk img {
+    height: 140px;
   }
 }
 
+/* Mobile (≤480px): 1 kolom */
 @media (max-width: 480px) {
   .produk-container {
-    grid-template-columns: 1fr;
+    gap: 12px;
   }
-.produk {
-  margin-bottom: 10px;
-}
-@media (max-width: 480px) {
+  .produk {
+    width: 100%;
+    height: auto;        /* biarkan tinggi adaptif jika konten bertambah */
+    margin-bottom: 20px; /* beri jarak bawah antar kotak */
+  }
   .produk img {
-    height: 150px;
+    height: 180px;       /* lebih tinggi di mobile agar proporsi bagus */
   }
 }
-
-
