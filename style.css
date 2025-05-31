@@ -29,10 +29,10 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 30px;       /* Jarak antar produk secara horizontal dan vertikal */
-  padding: 0 30px; /* Sedikit padding samping */
-  max-width: 900px;
+  gap: 20px;       /* Jarak antar produk secara horizontal dan vertikal */
+  padding: 0 20px; /* Sedikit padding samping */
   margin: 0 auto;  /* Buat kontainer selalu di tengah */
+  max-width: 740px;
 }
 
 /*--------------------------------------
