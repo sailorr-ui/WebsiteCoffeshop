@@ -20,20 +20,22 @@ h1 {
 
 .produk {
   width: 220px;
-  height: 320px;
+  height: 340px;
   background-color: white;
   border-radius: 15px;
   padding: 15px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
-  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .produk img {
   width: 100%;
-  height: 200px;
+  height: 160px;
   object-fit: cover;
   border-radius: 10px;
 }
