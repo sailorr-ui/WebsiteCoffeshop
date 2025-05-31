@@ -30,7 +30,7 @@ h1 {
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;       /* Jarak antar produk secara horizontal dan vertikal */
-  padding: 0 20px; /* Sedikit padding samping */
+  padding: 0 30px; /* Sedikit padding samping */
   max-width: 740px;
   margin: 0 auto;  /* Buat kontainer selalu di tengah */
 }
