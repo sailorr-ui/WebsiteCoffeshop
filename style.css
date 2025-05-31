@@ -36,8 +36,9 @@ h1 {
   height: 180px;
   object-fit: contain;
   border-radius: 10px;
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
+  background-color: transparent;
+  display: block;
+  margin: 0 auto;
 }
 
 .harga {
