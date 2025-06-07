@@ -1,21 +1,103 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <link rel="stylesheet" href="checkout.css">
   <meta charset="UTF-8" />
   <title>Checkout</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="checkout.css">
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    .pesanan-item { margin-bottom: 10px; }
-    #total { font-weight: bold; margin-top: 20px; }
-    #qr-container { margin-top: 20px; display: none; text-align: center; }
-    #qr-container img { border: 1px solid #ccc; border-radius: 8px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    #daftar-pesanan {
+      margin-bottom: 20px;
+    }
+
+    .pesanan-item {
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+
+    #total {
+      font-weight: bold;
+      text-align: right;
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #qr-container {
+      margin-top: 30px;
+      display: none;
+      text-align: center;
+    }
+
+    #qr-container img {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 200px;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
   </style>
 </head>
 <body>
 
   <h1>Checkout</h1>
+
+  <div class="form-group">
+    <label for="nama">Atas Nama</label>
+    <input type="text" id="nama" placeholder="Masukkan nama kamu">
+    <div id="nama-error" class="error" style="display:none;">Nama harus diisi</div>
+  </div>
 
   <div id="daftar-pesanan"></div>
   <div id="total">Total: Rp0</div>
@@ -24,7 +106,8 @@
 
   <div id="qr-container">
     <h3>Silakan Scan QR untuk Membayar</h3>
-    <img id="qr-image" src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/CoffeShop_qrcode.png" alt="QR Code Pembayaran" width="200">
+    <img id="qr-image" src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/CoffeShop_qrcode.png" alt="QR Code Pembayaran">
+    <p style="margin-top: 10px;">Setelah membayar, kirim bukti pembayaran ke admin.</p>
   </div>
 
   <script>
@@ -32,6 +115,9 @@
     const daftarPesanan = document.getElementById('daftar-pesanan');
     const totalElem = document.getElementById('total');
     const qrContainer = document.getElementById('qr-container');
+    const bayarBtn = document.getElementById('bayar-btn');
+    const namaInput = document.getElementById('nama');
+    const namaError = document.getElementById('nama-error');
 
     let total = 0;
 
@@ -45,8 +131,18 @@
 
     totalElem.textContent = `Total: Rp${total.toLocaleString('id-ID')}`;
 
-    document.getElementById('bayar-btn').addEventListener('click', () => {
+    bayarBtn.addEventListener('click', () => {
+      const nama = namaInput.value.trim();
+      if (nama === "") {
+        namaError.style.display = 'block';
+        return;
+      }
+
+      namaError.style.display = 'none';
       qrContainer.style.display = 'block';
+
+      // Di sini kamu bisa tambahkan fungsi untuk mengirim data ke Google Sheets:
+      // Kirim nama, pesanan, dan total
     });
   </script>
 
