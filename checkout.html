@@ -6,47 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="checkout.css">
   <style>
-    <script>
-  const pesanan = JSON.parse(localStorage.getItem('pesanan')) || [];
-  const daftarPesanan = document.getElementById('daftar-pesanan');
-  const totalElem = document.getElementById('total');
-  const qrContainer = document.getElementById('qr-container');
-
-  let total = 0;
-
-  pesanan.forEach(item => {
-    const itemElem = document.createElement('div');
-    itemElem.className = 'pesanan-item';
-    itemElem.textContent = `${item.nama} x ${item.jumlah} = Rp${(item.harga * item.jumlah).toLocaleString('id-ID')}`;
-    daftarPesanan.appendChild(itemElem);
-    total += item.harga * item.jumlah;
-  });
-
-  totalElem.textContent = `Total: Rp${total.toLocaleString('id-ID')}`;
-
-  const urlWebApp = "https://script.google.com/macros/s/AKfycby2bAevlRAdsX-m0I0s-5rd7vLRq0frbW-lwKDdy7egP5zWmidjp2m_BkYo2Fx9C1GV/exec";
-
-  document.getElementById('bayar-btn').addEventListener('click', () => {
-    qrContainer.style.display = 'block';
-
-    fetch(urlWebApp, {
-      method: 'POST',
-      body: JSON.stringify({
-        pesanan: pesanan,
-        total: total
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(res => res.text())
-    .then(response => {
-      console.log('✅ Terkirim ke Google Sheets:', response);
-    })
-    .catch(err => console.error('❌ Gagal kirim ke Google Sheets:', err));
-  });
-</script>
-
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
@@ -162,6 +121,7 @@
 
     let total = 0;
 
+    // Tampilkan daftar pesanan
     pesanan.forEach(item => {
       const itemElem = document.createElement('div');
       itemElem.className = 'pesanan-item';
@@ -170,6 +130,7 @@
       total += item.harga * item.jumlah;
     });
 
+    // Tampilkan total
     totalElem.textContent = `Total: Rp${total.toLocaleString('id-ID')}`;
 
     bayarBtn.addEventListener('click', () => {
@@ -182,8 +143,28 @@
       namaError.style.display = 'none';
       qrContainer.style.display = 'block';
 
-      // Di sini kamu bisa tambahkan fungsi untuk mengirim data ke Google Sheets:
-      // Kirim nama, pesanan, dan total
+      const urlWebApp = "https://script.google.com/macros/s/AKfycby2bAevlRAdsX-m0I0s-5rd7vLRq0frbW-lwKDdy7egP5zWmidjp2m_BkYo2Fx9C1GV/exec";
+
+      fetch(urlWebApp, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nama: nama,
+          pesanan: pesanan,
+          total: total
+        })
+      })
+      .then(res => res.text())
+      .then(response => {
+        console.log("✅ Berhasil kirim ke Google Sheets:", response);
+        alert("Pesanan berhasil dikirim! Silakan lanjutkan pembayaran.");
+      })
+      .catch(error => {
+        console.error("❌ Gagal kirim ke Google Sheets:", error);
+        alert("Terjadi kesalahan saat mengirim pesanan. Silakan coba lagi.");
+      });
     });
   </script>
 
