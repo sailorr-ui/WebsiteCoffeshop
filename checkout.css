@@ -1,76 +1,102 @@
-/* Gaya umum */
+/* checkout.css */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  margin: 0;
   padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  background-color: #f9f9f9;
   color: #333;
 }
 
 h1 {
   text-align: center;
-  color: #444;
   margin-bottom: 30px;
-}
-
-/* Daftar pesanan */
-#pesanan-container {
-  max-width: 600px;
-  margin: 0 auto;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
-}
-
-.pesanan-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-  font-size: 16px;
-}
-
-.pesanan-item:last-child {
-  border-bottom: none;
-}
-
-/* Total */
-#total {
-  font-size: 18px;
-  font-weight: bold;
-  text-align: right;
-  margin-top: 20px;
   color: #222;
 }
 
-/* Tombol bayar */
-#bayar-button {
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
   display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"] {
   width: 100%;
-  padding: 12px;
-  background-color: #2e7d32;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+#daftar-pesanan {
+  margin-bottom: 20px;
+}
+
+.pesanan-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+#total {
+  font-weight: bold;
+  text-align: right;
+  margin-top: 10px;
+  font-size: 18px;
+  color: #000;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 6px;
   cursor: pointer;
-  margin-top: 25px;
+  width: 100%;
+  margin-top: 10px;
   transition: background-color 0.3s ease;
 }
 
-#bayar-button:hover {
-  background-color: #1b5e20;
+button:hover {
+  background-color: #45a049;
 }
 
-/* QR Code */
 #qr-container {
   margin-top: 30px;
+  display: none;
   text-align: center;
 }
 
 #qr-container img {
+  border: 1px solid #ccc;
+  border-radius: 8px;
   width: 200px;
-  height: auto;
-  margin-top: 15px;
+}
+
+#qr-container p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  display: none;
 }
