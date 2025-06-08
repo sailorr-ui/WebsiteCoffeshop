@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Checkout</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="checkout.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -143,6 +142,7 @@
       namaError.style.display = 'none';
       qrContainer.style.display = 'block';
 
+      // Kirim ke Google Sheets
       const urlWebApp = "https://script.google.com/macros/s/AKfycby2bAevlRAdsX-m0I0s-5rd7vLRq0frbW-lwKDdy7egP5zWmidjp2m_BkYo2Fx9C1GV/exec";
 
       fetch(urlWebApp, {
@@ -165,7 +165,44 @@
         console.error("❌ Gagal kirim ke Google Sheets:", error);
         alert("Terjadi kesalahan saat mengirim pesanan. Silakan coba lagi.");
       });
+
+      // Kirim juga ke Firebase
+      simpanKeFirebase(nama, pesanan, total);
     });
+
+    function simpanKeFirebase(nama, pesanan, total) {
+      import('https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js').then(({ initializeApp }) => {
+        import('https://www.gstatic.com/firebasejs/11.9.0/firebase-database.js').then(({ getDatabase, ref, push, set }) => {
+          const firebaseConfig = {
+            apiKey: "AIzaSyD_KTfJ3ohREhiRKX_hqm68wt6_I9eTPBU",
+            authDomain: "form-checkout-1b645.firebaseapp.com",
+            databaseURL: "https://form-checkout-1b645-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "form-checkout-1b645",
+            storageBucket: "form-checkout-1b645.appspot.com",
+            messagingSenderId: "107568859183",
+            appId: "1:107568859183:web:6efe2354c46c06d62a5eda",
+            measurementId: "G-25YEMD5RN7"
+          };
+
+          const app = initializeApp(firebaseConfig);
+          const db = getDatabase(app);
+
+          const pesananRef = push(ref(db, 'pesanan'));
+          set(pesananRef, {
+            nama: nama,
+            pesanan: pesanan,
+            total: total,
+            waktu: new Date().toISOString()
+          })
+          .then(() => {
+            console.log("✅ Data berhasil disimpan ke Firebase");
+          })
+          .catch(error => {
+            console.error("❌ Gagal simpan ke Firebase:", error);
+          });
+        });
+      });
+    }
   </script>
 
 </body>
