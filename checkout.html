@@ -86,6 +86,20 @@
       font-size: 14px;
       margin-top: 5px;
     }
+
+    #whatsapp-link {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #25D366;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+
+    #whatsapp-link:hover {
+      background-color: #1ebe5f;
+    }
   </style>
 </head>
 <body>
@@ -107,6 +121,7 @@
     <h3>Silakan Scan QR untuk Membayar</h3>
     <img id="qr-image" src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/CoffeShop_qrcode.png" alt="QR Code Pembayaran">
     <p style="margin-top: 10px;">Setelah membayar, kirim bukti pembayaran ke admin.</p>
+    <a id="whatsapp-link" href="#" target="_blank">Lanjutkan ke WhatsApp</a>
   </div>
 
   <script>
@@ -117,6 +132,7 @@
     const bayarBtn = document.getElementById('bayar-btn');
     const namaInput = document.getElementById('nama');
     const namaError = document.getElementById('nama-error');
+    const whatsappLink = document.getElementById('whatsapp-link');
 
     let total = 0;
 
@@ -142,67 +158,14 @@
       namaError.style.display = 'none';
       qrContainer.style.display = 'block';
 
-      // Kirim ke Google Sheets
-      const urlWebApp = "https://script.google.com/macros/s/AKfycby2bAevlRAdsX-m0I0s-5rd7vLRq0frbW-lwKDdy7egP5zWmidjp2m_BkYo2Fx9C1GV/exec";
+      // Atur link WhatsApp otomatis
+      const whatsappNumber = "+628980851971"; // GANTI dengan nomor admin
+      const pesan = `Halo admin, saya sudah transfer Rp${total.toLocaleString('id-ID')} atas nama ${nama}.`;
+      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(pesan)}`;
+      whatsappLink.href = whatsappURL;
 
-      fetch(urlWebApp, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          nama: nama,
-          pesanan: pesanan,
-          total: total
-        })
-      })
-      .then(res => res.text())
-      .then(response => {
-        console.log("✅ Berhasil kirim ke Google Sheets:", response);
-        alert("Pesanan berhasil dikirim! Silakan lanjutkan pembayaran.");
-      })
-      .catch(error => {
-        console.error("❌ Gagal kirim ke Google Sheets:", error);
-        alert("Terjadi kesalahan saat mengirim pesanan. Silakan coba lagi.");
-      });
-
-      // Kirim juga ke Firebase
-      simpanKeFirebase(nama, pesanan, total);
+      alert("Pesanan berhasil dibuat! Silakan scan QR lalu lanjutkan ke WhatsApp.");
     });
-
-    function simpanKeFirebase(nama, pesanan, total) {
-      import('https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js').then(({ initializeApp }) => {
-        import('https://www.gstatic.com/firebasejs/11.9.0/firebase-database.js').then(({ getDatabase, ref, push, set }) => {
-          const firebaseConfig = {
-            apiKey: "AIzaSyD_KTfJ3ohREhiRKX_hqm68wt6_I9eTPBU",
-            authDomain: "form-checkout-1b645.firebaseapp.com",
-            databaseURL: "https://form-checkout-1b645-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "form-checkout-1b645",
-            storageBucket: "form-checkout-1b645.appspot.com",
-            messagingSenderId: "107568859183",
-            appId: "1:107568859183:web:6efe2354c46c06d62a5eda",
-            measurementId: "G-25YEMD5RN7"
-          };
-
-          const app = initializeApp(firebaseConfig);
-          const db = getDatabase(app);
-
-          const pesananRef = push(ref(db, 'pesanan'));
-          set(pesananRef, {
-            nama: nama,
-            pesanan: pesanan,
-            total: total,
-            waktu: new Date().toISOString()
-          })
-          .then(() => {
-            console.log("✅ Data berhasil disimpan ke Firebase");
-          })
-          .catch(error => {
-            console.error("❌ Gagal simpan ke Firebase:", error);
-          });
-        });
-      });
-    }
   </script>
 
 </body>
