@@ -100,3 +100,19 @@ button:hover {
   margin-top: 5px;
   display: none;
 }
+#whatsapp-link {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 24px;
+  background-color: #25D366;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+#whatsapp-link:hover {
+  background-color: #1ebe5f;
+}
+
