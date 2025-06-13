@@ -100,10 +100,27 @@
     #whatsapp-link:hover {
       background-color: #1ebe5f;
     }
+
+    #kembali {
+      display: inline-block;
+      margin-bottom: 15px;
+      font-size: 14px;
+      text-decoration: none;
+      color: #555;
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background-color: #eee;
+    }
+
+    #kembali:hover {
+      background-color: #ddd;
+    }
   </style>
 </head>
 <body>
 
+  <a href="index.html" id="kembali">&larr; Kembali</a>
   <h1>Checkout</h1>
 
   <div class="form-group">
@@ -159,12 +176,10 @@
       qrContainer.style.display = 'block';
 
       // Atur link WhatsApp otomatis
-      const whatsappNumber = "+628980851971"; // GANTI dengan nomor admin
+      const whatsappNumber = "628980851971"; // Tanpa tanda plus
       const pesan = `Halo admin, saya sudah transfer Rp${total.toLocaleString('id-ID')} atas nama ${nama}.`;
       const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(pesan)}`;
       whatsappLink.href = whatsappURL;
-
-      alert("Pesanan berhasil dibuat! Silakan scan QR lalu lanjutkan ke WhatsApp.");
     });
   </script>
 
