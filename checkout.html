@@ -112,20 +112,18 @@ bayarBtn.addEventListener('click', async () => {
   namaError.style.display = "none";
   qrContainer.style.display = "block";
 
-  try {
-    await push(ref(db, "checkout"), {
-      nama: nama,
-      pesanan: pesanan,
-      total: total,
-      waktu: new Date().toISOString(),
-      status: "pending"
-    });
+try {
+  const result = await push(ref(db, "tes"), {
+    nama: nama,
+    waktu: new Date().toISOString()
+  });
 
-    alert("Pesanan berhasil disimpan ke Firebase ✅");
-  } catch (err) {
-    console.error(err);
-    alert("Gagal simpan ke Firebase ❌");
-  }
+  console.log("KEY:", result.key);
+  alert("Tersimpan. Key: " + result.key);
+} catch (err) {
+  console.error("ERROR:", err);
+  alert("Gagal: " + err.message);
+}
 });
 </script>
 
