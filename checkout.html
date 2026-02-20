@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Checkout</title>
+  <meta charset="UTF-8">
+  <title>Form Checkout</title>
 </head>
 <body>
 
-<h2>Checkout TEST</h2>
+<h2>Form Checkout</h2>
 
-<label>Atas Nama</label><br>
-<input type="text" id="nama" placeholder="Masukkan nama"><br><br>
+<form id="formCheckout">
+  <input type="text" id="nama" placeholder="Masukkan Nama" required>
+  <br><br>
+  <button type="submit">Kirim</button>
+</form>
 
-<button id="bayar-btn">Bayar Sekarang</button>
+<p id="status"></p>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+  // CONFIG PUNYA KAMU
   const firebaseConfig = {
     apiKey: "AIzaSyCmaCTNGhxjX07I94TA7XXOoLNnbmOF4Ts",
     authDomain: "form-checkout-592c3.firebaseapp.com",
@@ -24,33 +28,34 @@
     projectId: "form-checkout-592c3",
     storageBucket: "form-checkout-592c3.firebasestorage.app",
     messagingSenderId: "190795533293",
-    appId: "1:190795533293:web:49e162fcbd864902f075e4"
+    appId: "1:190795533293:web:49e162fcbd864902f075e4",
+    measurementId: "G-BSS520MEVG"
   };
 
+  // INIT FIREBASE
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  const btn = document.getElementById("bayar-btn");
-  const namaInput = document.getElementById("nama");
+  const form = document.getElementById("formCheckout");
+  const status = document.getElementById("status");
 
-  btn.addEventListener("click", async () => {
-    const nama = namaInput.value.trim();
-    if (!nama) {
-      alert("Isi nama dulu");
-      return;
-    }
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
 
-    try {
-      const result = await push(ref(db, "checkout_test"), {
-        nama: nama,
-        waktu: new Date().toISOString()
-      });
+    const nama = document.getElementById("nama").value;
 
-      alert("BERHASIL! Key: " + result.key);
-    } catch (err) {
-      console.error(err);
-      alert("GAGAL: " + err.message);
-    }
+    push(ref(db, "checkout"), {
+      nama: nama,
+      waktu: new Date().toISOString()
+    })
+    .then(() => {
+      status.innerText = "✅ Data berhasil dikirim ke Firebase";
+      form.reset();
+    })
+    .catch((error) => {
+      status.innerText = "❌ Error: " + error.message;
+      console.log(error);
+    });
   });
 </script>
 
