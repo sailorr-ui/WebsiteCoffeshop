@@ -3,128 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <title>Checkout</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
-      background-color: #f9f9f9;
-    }
-    h1 { text-align: center; margin-bottom: 30px; }
-    .form-group { margin-bottom: 20px; }
-    label { display: block; margin-bottom: 5px; font-weight: bold; }
-    input[type="text"] {
-      width: 100%; padding: 10px; box-sizing: border-box;
-      border: 1px solid #ccc; border-radius: 6px;
-    }
-    #daftar-pesanan { margin-bottom: 20px; }
-    .pesanan-item {
-      margin-bottom: 10px; padding: 10px;
-      background: #fff; border: 1px solid #ddd; border-radius: 6px;
-    }
-    #total { font-weight: bold; text-align: right; margin-top: 10px; font-size: 18px; }
-    button {
-      padding: 10px 20px; font-size: 16px;
-      background-color: #4CAF50; color: white;
-      border: none; border-radius: 6px; cursor: pointer;
-    }
-    button:hover { background-color: #45a049; }
-    #qr-container { margin-top: 30px; display: none; text-align: center; }
-    #qr-container img { border: 1px solid #ccc; border-radius: 8px; width: 200px; }
-    .error { color: red; font-size: 14px; margin-top: 5px; }
-    #kembali {
-      display: inline-block; margin-bottom: 15px;
-      font-size: 14px; text-decoration: none; color: #555;
-      border: 1px solid #ccc; padding: 8px 12px;
-      border-radius: 6px; background-color: #eee;
-    }
-    #kembali:hover { background-color: #ddd; }
-  </style>
 </head>
 <body>
 
-<a href="index.html" id="kembali">&larr; Kembali</a>
-<h1>Checkout</h1>
+<h2>Checkout TEST</h2>
 
-<div class="form-group">
-  <label for="nama">Atas Nama</label>
-  <input type="text" id="nama" placeholder="Masukkan nama kamu">
-  <div id="nama-error" class="error" style="display:none;">Nama harus diisi</div>
-</div>
-
-<div id="daftar-pesanan"></div>
-<div id="total">Total: Rp0</div>
+<label>Atas Nama</label><br>
+<input type="text" id="nama" placeholder="Masukkan nama"><br><br>
 
 <button id="bayar-btn">Bayar Sekarang</button>
 
-<div id="qr-container">
-  <h3>Silakan Scan QR untuk Membayar</h3>
-  <img src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/CoffeShop_qrcode.png">
-  <p style="margin-top:10px;">Pesanan otomatis tersimpan ke database.</p>
-</div>
-
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCmaCTNGhxjX07I94TA7XXOoLNnbmOF4Ts",
-  authDomain: "form-checkout-592c3.firebaseapp.com",
-  databaseURL: "https://form-checkout-592c3-default-rtdb.firebaseio.com",
-  projectId: "form-checkout-592c3",
-  storageBucket: "form-checkout-592c3.firebasestorage.app",
-  messagingSenderId: "190795533293",
-  appId: "1:190795533293:web:49e162fcbd864902f075e4"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyCmaCTNGhxjX07I94TA7XXOoLNnbmOF4Ts",
+    authDomain: "form-checkout-592c3.firebaseapp.com",
+    databaseURL: "https://form-checkout-592c3-default-rtdb.firebaseio.com",
+    projectId: "form-checkout-592c3",
+    storageBucket: "form-checkout-592c3.firebasestorage.app",
+    messagingSenderId: "190795533293",
+    appId: "1:190795533293:web:49e162fcbd864902f075e4"
+  };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
 
-const pesanan = JSON.parse(localStorage.getItem('pesanan')) || [];
-const daftarPesanan = document.getElementById('daftar-pesanan');
-const totalElem = document.getElementById('total');
-const qrContainer = document.getElementById('qr-container');
-const bayarBtn = document.getElementById('bayar-btn');
-const namaInput = document.getElementById('nama');
-const namaError = document.getElementById('nama-error');
+  const btn = document.getElementById("bayar-btn");
+  const namaInput = document.getElementById("nama");
 
-let total = 0;
+  btn.addEventListener("click", async () => {
+    const nama = namaInput.value.trim();
+    if (!nama) {
+      alert("Isi nama dulu");
+      return;
+    }
 
-pesanan.forEach(item => {
-  const div = document.createElement('div');
-  div.className = 'pesanan-item';
-  div.textContent = `${item.nama} x ${item.jumlah} = Rp${(item.harga * item.jumlah).toLocaleString('id-ID')}`;
-  daftarPesanan.appendChild(div);
-  total += item.harga * item.jumlah;
-});
+    try {
+      const result = await push(ref(db, "checkout_test"), {
+        nama: nama,
+        waktu: new Date().toISOString()
+      });
 
-totalElem.textContent = `Total: Rp${total.toLocaleString('id-ID')}`;
-
-bayarBtn.addEventListener('click', async () => {
-  const nama = namaInput.value.trim();
-  if (!nama) {
-    namaError.style.display = "block";
-    return;
-  }
-
-  namaError.style.display = "none";
-  qrContainer.style.display = "block";
-
-try {
-  const result = await push(ref(db, "tes"), {
-    nama: nama,
-    waktu: new Date().toISOString()
+      alert("BERHASIL! Key: " + result.key);
+    } catch (err) {
+      console.error(err);
+      alert("GAGAL: " + err.message);
+    }
   });
-
-  console.log("KEY:", result.key);
-  alert("Tersimpan. Key: " + result.key);
-} catch (err) {
-  console.error("ERROR:", err);
-  alert("Gagal: " + err.message);
-}
-});
 </script>
 
 </body>
