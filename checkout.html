@@ -87,20 +87,6 @@
       margin-top: 5px;
     }
 
-    #whatsapp-link {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 20px;
-      background-color: #25D366;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-    }
-
-    #whatsapp-link:hover {
-      background-color: #1ebe5f;
-    }
-
     #kembali {
       display: inline-block;
       margin-bottom: 15px;
@@ -136,32 +122,27 @@
 
   <div id="qr-container">
     <h3>Silakan Scan QR untuk Membayar</h3>
-    <img id="qr-image" src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/CoffeShop_qrcode.png" alt="QR Code Pembayaran">
-    <p style="margin-top: 10px;">Setelah membayar, kirim bukti pembayaran ke admin.</p>
-    <a id="whatsapp-link" href="#" target="_blank">Lanjutkan ke WhatsApp</a>
+    <img src="https://raw.githubusercontent.com/sailorr-ui/WebsiteCoffeshop/refs/heads/main/CoffeShop_qrcode.png" alt="QR Code Pembayaran">
+    <p style="margin-top: 10px;">Pesanan akan otomatis tersimpan setelah klik Bayar.</p>
   </div>
 
 <script type="module">
-  // 🔥 Import Firebase dari CDN
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-  // ⚙️ Config Firebase kamu
   const firebaseConfig = {
     apiKey: "AIzaSyCmaCTNGhxjX07I94TA7XXOoLNnbmOF4Ts",
     authDomain: "form-checkout-592c3.firebaseapp.com",
+    databaseURL: "https://form-checkout-592c3-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "form-checkout-592c3",
     storageBucket: "form-checkout-592c3.firebasestorage.app",
     messagingSenderId: "190795533293",
-    appId: "1:190795533293:web:49e162fcbd864902f075e4",
-    measurementId: "G-BSS520MEVG"
+    appId: "1:190795533293:web:49e162fcbd864902f075e4"
   };
 
-  // 🚀 Init Firebase
   const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  const db = getDatabase(app);
 
-  // =============================
   const pesanan = JSON.parse(localStorage.getItem('pesanan')) || [];
   const daftarPesanan = document.getElementById('daftar-pesanan');
   const totalElem = document.getElementById('total');
@@ -169,7 +150,6 @@
   const bayarBtn = document.getElementById('bayar-btn');
   const namaInput = document.getElementById('nama');
   const namaError = document.getElementById('nama-error');
-  const whatsappLink = document.getElementById('whatsapp-link');
 
   let total = 0;
 
@@ -183,7 +163,7 @@
 
   totalElem.textContent = `Total: Rp${total.toLocaleString('id-ID')}`;
 
-  bayarBtn.addEventListener('click', async () => {
+  bayarBtn.addEventListener('click', () => {
     const nama = namaInput.value.trim();
     if (nama === "") {
       namaError.style.display = 'block';
@@ -193,25 +173,16 @@
     namaError.style.display = 'none';
     qrContainer.style.display = 'block';
 
-    // 💾 SIMPAN KE FIREBASE
-    try {
-      await addDoc(collection(db, "checkout"), {
-        nama: nama,
-        pesanan: pesanan,
-        total: total,
-        waktu: serverTimestamp()
-      });
-      console.log("Data berhasil disimpan ke Firebase");
-    } catch (error) {
-      alert("Gagal simpan ke database");
-      console.error(error);
-    }
+    // SIMPAN KE FIREBASE
+    push(ref(db, "checkout"), {
+      nama: nama,
+      pesanan: pesanan,
+      total: total,
+      waktu: new Date().toISOString(),
+      status: "pending"
+    });
 
-    // WhatsApp tetap jalan
-    const whatsappNumber = "628980851971";
-    const pesan = `Halo admin, saya sudah transfer Rp${total.toLocaleString('id-ID')} atas nama ${nama}.`;
-    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(pesan)}`;
-    whatsappLink.href = whatsappURL;
+    alert("Pesanan berhasil disimpan ke database!");
   });
 </script>
 
