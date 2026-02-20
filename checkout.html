@@ -141,47 +141,79 @@
     <a id="whatsapp-link" href="#" target="_blank">Lanjutkan ke WhatsApp</a>
   </div>
 
-  <script>
-    const pesanan = JSON.parse(localStorage.getItem('pesanan')) || [];
-    const daftarPesanan = document.getElementById('daftar-pesanan');
-    const totalElem = document.getElementById('total');
-    const qrContainer = document.getElementById('qr-container');
-    const bayarBtn = document.getElementById('bayar-btn');
-    const namaInput = document.getElementById('nama');
-    const namaError = document.getElementById('nama-error');
-    const whatsappLink = document.getElementById('whatsapp-link');
+<script type="module">
+  // 🔥 Import Firebase dari CDN
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    let total = 0;
+  // ⚙️ Config Firebase kamu
+  const firebaseConfig = {
+    apiKey: "AIzaSyCmaCTNGhxjX07I94TA7XXOoLNnbmOF4Ts",
+    authDomain: "form-checkout-592c3.firebaseapp.com",
+    projectId: "form-checkout-592c3",
+    storageBucket: "form-checkout-592c3.firebasestorage.app",
+    messagingSenderId: "190795533293",
+    appId: "1:190795533293:web:49e162fcbd864902f075e4",
+    measurementId: "G-BSS520MEVG"
+  };
 
-    // Tampilkan daftar pesanan
-    pesanan.forEach(item => {
-      const itemElem = document.createElement('div');
-      itemElem.className = 'pesanan-item';
-      itemElem.textContent = `${item.nama} x ${item.jumlah} = Rp${(item.harga * item.jumlah).toLocaleString('id-ID')}`;
-      daftarPesanan.appendChild(itemElem);
-      total += item.harga * item.jumlah;
-    });
+  // 🚀 Init Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    // Tampilkan total
-    totalElem.textContent = `Total: Rp${total.toLocaleString('id-ID')}`;
+  // =============================
+  const pesanan = JSON.parse(localStorage.getItem('pesanan')) || [];
+  const daftarPesanan = document.getElementById('daftar-pesanan');
+  const totalElem = document.getElementById('total');
+  const qrContainer = document.getElementById('qr-container');
+  const bayarBtn = document.getElementById('bayar-btn');
+  const namaInput = document.getElementById('nama');
+  const namaError = document.getElementById('nama-error');
+  const whatsappLink = document.getElementById('whatsapp-link');
 
-    bayarBtn.addEventListener('click', () => {
-      const nama = namaInput.value.trim();
-      if (nama === "") {
-        namaError.style.display = 'block';
-        return;
-      }
+  let total = 0;
 
-      namaError.style.display = 'none';
-      qrContainer.style.display = 'block';
+  pesanan.forEach(item => {
+    const itemElem = document.createElement('div');
+    itemElem.className = 'pesanan-item';
+    itemElem.textContent = `${item.nama} x ${item.jumlah} = Rp${(item.harga * item.jumlah).toLocaleString('id-ID')}`;
+    daftarPesanan.appendChild(itemElem);
+    total += item.harga * item.jumlah;
+  });
 
-      // Atur link WhatsApp otomatis
-      const whatsappNumber = "628980851971"; // Tanpa tanda plus
-      const pesan = `Halo admin, saya sudah transfer Rp${total.toLocaleString('id-ID')} atas nama ${nama}.`;
-      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(pesan)}`;
-      whatsappLink.href = whatsappURL;
-    });
-  </script>
+  totalElem.textContent = `Total: Rp${total.toLocaleString('id-ID')}`;
+
+  bayarBtn.addEventListener('click', async () => {
+    const nama = namaInput.value.trim();
+    if (nama === "") {
+      namaError.style.display = 'block';
+      return;
+    }
+
+    namaError.style.display = 'none';
+    qrContainer.style.display = 'block';
+
+    // 💾 SIMPAN KE FIREBASE
+    try {
+      await addDoc(collection(db, "checkout"), {
+        nama: nama,
+        pesanan: pesanan,
+        total: total,
+        waktu: serverTimestamp()
+      });
+      console.log("Data berhasil disimpan ke Firebase");
+    } catch (error) {
+      alert("Gagal simpan ke database");
+      console.error(error);
+    }
+
+    // WhatsApp tetap jalan
+    const whatsappNumber = "628980851971";
+    const pesan = `Halo admin, saya sudah transfer Rp${total.toLocaleString('id-ID')} atas nama ${nama}.`;
+    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(pesan)}`;
+    whatsappLink.href = whatsappURL;
+  });
+</script>
 
 </body>
 </html>
