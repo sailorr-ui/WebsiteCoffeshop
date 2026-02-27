@@ -90,34 +90,38 @@ h1 {
   margin-bottom: 12px;
 }
 
-.level-pedas p {
+.judul-pedas {
   font-size: 14px;
   margin-bottom: 6px;
   color: #444;
 }
 
-.pedas-option {
+.pedas-counter {
   display: flex;
   justify-content: center;
-  gap: 6px;
+  align-items: center;
+  gap: 10px;
 }
 
-.pedas-option input {
-  display: none;
-}
-
-.pedas-option label {
-  padding: 4px 10px;
-  border-radius: 6px;
-  background-color: #e0e0e0;
-  cursor: pointer;
+.pedas-counter button {
+  width: 28px;
+  height: 28px;
   font-size: 14px;
+  background-color: #ffdddd;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
   transition: 0.2s;
 }
 
-.pedas-option input:checked + label {
-  background-color: #ff4d4d;
-  color: white;
+.pedas-counter button:hover {
+  background-color: #ffbbbb;
+}
+
+.level-jumlah {
+  min-width: 20px;
+  text-align: center;
+  font-size: 14px;
 }
 
 /*--------------------------------------
