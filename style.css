@@ -83,6 +83,44 @@ h1 {
 }
 
 /*--------------------------------------
+  LEVEL PEDAS
+--------------------------------------*/
+.level-pedas {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.level-pedas p {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.pedas-option {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.pedas-option input {
+  display: none;
+}
+
+.pedas-option label {
+  padding: 4px 10px;
+  border-radius: 6px;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.pedas-option input:checked + label {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+/*--------------------------------------
   CONTROLLER (+ / –)
 --------------------------------------*/
 .counter {
