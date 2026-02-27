@@ -196,21 +196,11 @@
     // SIMPAN KE FIREBASE
     try {
       await push(ref(db, "checkout"), {
-        nama: nama,
-        pesanan: pesanan.map(item => 
-  item.level !== undefined
-    ? `${item.nama} (Level ${item.level}) x ${item.jumlah}`
-    : `${item.nama} x ${item.jumlah}`
-),
-        total: total,
-        waktu: waktuLengkap
-      });
-      console.log("Data masuk ke Firebase");
-    } catch (error) {
-      alert("Gagal simpan ke database");
-      console.error(error);
-    }
-  });
+  nama: nama,
+  pesanan: pesanan,
+  total: total,
+  waktu: waktuLengkap
+});
 </script>
 
 </body>
