@@ -9,9 +9,10 @@ app.use(bodyParser.json());
 
 let snap = new midtransClient.Snap({
   isProduction: false,
-  serverKey: 'Mid-server-iyU_v98lcWTjM1KsvhR4Xa4z',
-  clientKey: 'Mid-client-67s2LUw5jQq9o8Us'
+  serverKey: process.env.MIDTRANS_SERVER_KEY,
+  clientKey: process.env.MIDTRANS_CLIENT_KEY
 });
+
 
 
 app.post('/create-transaction', async (req, res) => {
