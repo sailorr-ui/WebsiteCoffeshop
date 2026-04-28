@@ -34,10 +34,10 @@ module.exports = async (req, res) => {
                 namaItem += ` Note ${item.note}`;
             }
             return {
-                id: `${item.nama.replace(/\s/g, '_')}_${index}`,
+                id: `ITEM_${index}`,
                 price: item.harga,
                 quantity: item.jumlah,
-                name: namaItem.substring(0, 50)
+                name: namaItem.replace(/[^a-zA-Z0-9 ]/g, '').substring(0, 50)
             };
         });
     }
